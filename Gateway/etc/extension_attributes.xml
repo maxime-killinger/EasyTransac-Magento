@@ -1,0 +1,12 @@
+<config>
+    <extension_attributes for="Path\To\Interface">
+        <attribute code="easytransac_clientid" type="varchar">
+           <resources>
+              <resource  ref="permission"/>
+           </resources>
+           <join reference_table="" reference_field="" join_on_field="">
+              <field>fieldname</field>
+           </join>            
+        </attribute>
+    </extension_attributes>
+</config>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Easytransac_Gateway DI definitions.
+*
+* @category    Easytransac
+* @package     Easytransac_Gateway
+* @author      Easytrasac
+* @copyright   Easytransac (https://www.easytransac.com)
+* @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+*/
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <virtualType name="Easytransac\Gateway\Model\ConfigProvider" type="Magento\Payment\Model\CcGenericConfigProvider">
+        <arguments>
+            <argument name="methodCodes" xsi:type="array">
+                <item name="easytransac_gateway" xsi:type="const">Easytransac\Gateway\Model\Payment::CODE</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="easytransac_gateway_config_provider" xsi:type="object">Easytransac\Gateway\Model\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    
+    <preference for="Magento\Framework\Model\ActionValidator\RemoveAction" type="Magento\Framework\Model\ActionValidator\RemoveAction\Allowed" />
+
+</config>
