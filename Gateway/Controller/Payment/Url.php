@@ -107,7 +107,7 @@ Class Url extends \Magento\Framework\App\Action\Action
 		// End reserve order
 		
 		$_SESSION['easytransac_gateway_processing_qid'] = $this->_checkoutSession->getQuoteId();
-		$langcode = $this->resolver->getLocale() == 'fr_FR' ? 'FRE' : 'ENG';
+		$langcode = substr($this->resolver->getLocale(), 0, 3) == 'fr_' ? 'FRE' : 'ENG';
 		
 		// Order mail if anonymous.
 		$data = array(
