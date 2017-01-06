@@ -34,6 +34,11 @@ Class Url extends \Magento\Framework\App\Action\Action
      * @var \Magento\Quote\Api\CartRepositoryInterface
      */
     protected $quoteRepository;
+	
+	/**
+     * @var \Magento\Framework\Locale\Resolver
+     */
+    protected $resolver;
 
 	public function __construct(
 		\Magento\Framework\App\Action\Context $context,
@@ -43,7 +48,8 @@ Class Url extends \Magento\Framework\App\Action\Action
 		\Magento\Store\Model\StoreManagerInterface $storeManager,
 		\Psr\Log\LoggerInterface $logger,
 		\Easytransac\Gateway\Model\EasytransacApi $api,
-		\Magento\Quote\Api\CartRepositoryInterface $quoteRepository)
+		\Magento\Quote\Api\CartRepositoryInterface $quoteRepository,
+		\Magento\Framework\Locale\Resolver $resolver)
 	{
 		parent::__construct($context);
 		$this->_checkoutSession = $_checkoutSession;
@@ -52,6 +58,7 @@ Class Url extends \Magento\Framework\App\Action\Action
 		$this->storeManager = $storeManager;
 		$this->logger = $logger;
 		$this->quoteRepository = $quoteRepository;
+		$this->resolver = $resolver;
 	}
 
 	/**
@@ -100,6 +107,7 @@ Class Url extends \Magento\Framework\App\Action\Action
 		// End reserve order
 		
 		$_SESSION['easytransac_gateway_processing_qid'] = $this->_checkoutSession->getQuoteId();
+		$langcode = $this->resolver->getLocale() == 'fr_FR' ? 'FRE' : 'ENG';
 		
 		// Order mail if anonymous.
 		$data = array(
@@ -127,6 +135,7 @@ Class Url extends \Magento\Framework\App\Action\Action
 		  "UserAgent" => isset($_SERVER['HTTP_USER_AGENT']) 
 			? $_SERVER['HTTP_USER_AGENT'] : '',
 		  "Version" => 'Magento 1.0.0',
+		  "Language" => $langcode,
 		);
 		
 		$et_return = $this->request_payment_page($data);
