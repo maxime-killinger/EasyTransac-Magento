@@ -134,7 +134,7 @@ Class Url extends \Magento\Framework\App\Action\Action
 		  "Phone" => $billing_address['telephone'],
 		  "UserAgent" => isset($_SERVER['HTTP_USER_AGENT']) 
 			? $_SERVER['HTTP_USER_AGENT'] : '',
-		  "Version" => 'Magento 1.0.0',
+		  "Version" => 'Magento 1.0.2',
 		  "Language" => $langcode,
 		);
 		
